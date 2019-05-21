@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const messagesCtrl = require('./messagesCtrl');
 const session = require('express-session');
+const SESSION_SECRET = "secret";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(
     saveUninitialized: false
   })
 );
+
 app.use((req, res, next) => {
   let badWords = ['knucklehead', 'jerk', 'internet explorer'];
   if (req.body.message) {
@@ -29,6 +31,8 @@ app.use((req, res, next) => {
 app.get('/api/messages', messagesCtrl.getAllMessages);
 app.get('/api/messages/history', messagesCtrl.history);
 app.post('/api/messages', messagesCtrl.createMessage);
+
+const SERVER_PORT = 5050;
 
 app.listen(SERVER_PORT, () => {
   console.log(`Server listening on port ${SERVER_PORT}.`);
